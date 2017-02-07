@@ -35,8 +35,10 @@ class Router {
                 console.log('Created route: ' + baseRoute + ' for ' + fullName);
 
                 //Load the JavaScript file ("controller") and pass the router to it
-
-
+                const controllerClass = require('../' + fullName);
+                const controller = new controllerClass(router);
+                //associate the route with the router
+                app.use(baseRoute, router);
             }
         });
     }

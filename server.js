@@ -93,7 +93,7 @@ class Server {
     }
 
     initRoutes() {
-
+        router.load(app, './controllers');
 
         // redirect all others to the index (HTML5 history)
         app.all('/*', function(req, res) {
