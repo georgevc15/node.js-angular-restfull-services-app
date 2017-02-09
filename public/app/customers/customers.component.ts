@@ -25,7 +25,7 @@ export class CustomersComponent implements OnInit {
   
   ngOnInit() {
     this.title = 'Customers';
-    this.getCustomersPage(1);
+
   }
 
   filterChanged(filterText: string) {
@@ -39,11 +39,16 @@ export class CustomersComponent implements OnInit {
   }
 
   pageChanged(page: number) {
-    this.getCustomersPage(page);
-  }
-
-  getCustomersPage(page: number) {
 
   }
+
+  getCustomers() {
+      this.dataService.getCustomers()
+          .subscribe((customers: ICustomer[]) => {
+              this.customers = this.filteredCustomers = customers;
+          },
+          ((err: any) => console.log(err)),
+          () => console.log('getCustomers() was called retrieved customers'));
+    }
 
 }
