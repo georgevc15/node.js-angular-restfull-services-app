@@ -12,7 +12,9 @@ import { ICustomer, IOrder, IState, IPagedResults } from '../shared/interfaces';
 @Injectable()
 export class DataService {
   
-   
+    
+
+    constructor(private http: Http) { 
 
     }
     
