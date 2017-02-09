@@ -11,13 +11,39 @@ import { ICustomer, IOrder, IState, IPagedResults } from '../shared/interfaces';
 
 @Injectable()
 export class DataService {
-  
-    
 
+    baseUrl: string = '/api/customers';
+    
     constructor(private http: Http) { 
 
     }
     
+
+    getCustomers() : Observable<ICustomer[]> {
+        return this.http.get(this.baseUrl)
+                   .map((res: Response) => {
+                       let customers = res.json();
+                       this.calculateCustomersOrderTotal(customers);
+                       return customers;
+                   })
+                   .catch(this.handleError);
+    }
+
+
+    getCustomer(id: string) : Observable<ICustomer> {
+        return this.http.get(this.baseUrl + '/' +id)
+                   .map((res: Response) => res.json())
+                   .catch(this.handleError);
+    }
+
+
+    getStates() : Onservable<IState[]> {
+        return this.http.get('/api/states')
+                   .map((res: Response) => res.json())
+                   .catch(this.handleError);
+    }
+
+
 
     calculateCustomersOrderTotal(customers: ICustomer[]) {
         for (let customer of customers) {
