@@ -6,7 +6,9 @@ const customersRepo = require('../../../lib/customersRepository'),
 class CustomersController {
     //api /api/customers
     constructor(router) {
-        router.get('/', this.getCustomers.bind(this))
+        router.get('/', this.getCustomers.bind(this));
+        router.get('/:id', this.getCustomer.bind(this));
+
     }
 
     getCustomers(req, res) {
@@ -21,6 +23,21 @@ class CustomersController {
             }
         });
     }
+
+    getCustomer(req, res) {
+        console.log(' -> getCustomer ');
+        const id=  req.params.id;
+        customersRepo.getCustomer(id, (err, customer) => {
+            if(err) {
+                console.log(' -> getCustomer error' + util.inspect(err));
+                res.json(null);
+            } else {
+                console.log(' -> getCustomer ok');
+                res.json(customer);
+            }
+        });
+      }      
+
 
 }
 
