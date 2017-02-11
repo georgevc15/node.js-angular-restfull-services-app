@@ -47,12 +47,11 @@ export class CustomerEditComponent implements OnInit {
 
   getCustomer(id: string) {
       this.dataService.getCustomer(id)
-        .subscribe((customer: ICustomer) => {
-          //Quick and dirty clone used in case user cancels out of form
-          const cust = JSON.stringify(customer);
-          this.customer = JSON.parse(cust);
-        },
-        (err: any) => console.log(err));
+           .subscribe((customer: ICustomer) => {
+             const cust = JSON.stringify(customer);
+             this.customer =  JSON.parse(cust);    
+           }, 
+           (err: any) => console.log(err));
   }
 
   getStates() {
@@ -61,32 +60,6 @@ export class CustomerEditComponent implements OnInit {
   
   submit() {
 
-      if (this.customer._id) {
-
-        this.dataService.updateCustomer(this.customer)
-          .subscribe((customer: ICustomer) => {
-            if (customer) {
-              this.router.navigate(['/customers']);
-            } else {
-              this.errorMessage = 'Unable to save customer';
-            }
-          },
-          (err: any) => console.log(err));
-
-      } else {
-
-        this.dataService.insertCustomer(this.customer)
-          .subscribe((customer: ICustomer) => {
-            if (customer) {
-              this.router.navigate(['/customers']);
-            }
-            else {
-              this.errorMessage = 'Unable to add customer';
-            }
-          },
-          (err: any) => console.log(err));
-          
-      }
   }
   
   cancel(event: Event) {
